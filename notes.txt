@@ -9,3 +9,7 @@ SETUP FOR THE SERVER SIDE:
 SETUP FOR THE CLIENT SIDE:
 1. ReactJS v18
 2. Apply Hooks and Typescript
+
+Features:
+Able to manage todo lists like create/add, edit/update, view/display
+Able to filter like Pending, ongoing and mark as completed/done
