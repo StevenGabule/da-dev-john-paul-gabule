@@ -9,6 +9,6 @@
 
         public function apply($model)
         {
-            return $model->latest();
+            return $model->orderBy('created_at', 'desc');
         }
     }

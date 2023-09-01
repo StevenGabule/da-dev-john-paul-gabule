@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+  namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+  use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTodoRequest extends FormRequest
-{
+  class UpdateTodoRequest extends FormRequest
+  {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+      return true;
     }
 
     /**
@@ -21,8 +21,8 @@ class UpdateTodoRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+      return [
+        'title' => 'required|string|max:255',
+      ];
     }
-}
+  }

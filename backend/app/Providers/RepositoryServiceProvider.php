@@ -1,19 +1,18 @@
 <?php
 
-  namespace App\Providers;
+namespace App\Providers;
 
-  use App\Repositories\Contracts\ITodo;
-  use App\Repositories\Eloquent\TodoRepository;
-  use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
+use App\Repositories\Contracts\ITodo;
+use App\Repositories\Eloquent\TodoRepository;
 
-  class RepositoryServiceProvider extends ServiceProvider
-  {
+class RepositoryServiceProvider extends ServiceProvider
+{
     /**
      * Register services.
      */
     public function register(): void
     {
-      //
     }
 
     /**
@@ -23,4 +22,4 @@
     {
       $this->app->bind(ITodo::class, TodoRepository::class);
     }
-  }
+}

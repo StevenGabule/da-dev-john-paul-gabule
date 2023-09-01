@@ -2,64 +2,69 @@
 
   namespace App\Http\Controllers;
 
+  use App\Http\Resources\TodoResource;
   use App\Models\Todo;
+  use App\Repositories\Contracts\ITodo;
+  use App\Repositories\Eloquent\Criteria\LatestFirst;
+  use Illuminate\Http\JsonResponse;
+  use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
   use App\Http\Requests\{StoreTodoRequest, UpdateTodoRequest};
 
   class TodoController extends Controller
   {
+    public function __construct(protected ITodo $todos) {}
+
     /**
-     * Display a listing of the resource.
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-      //
+      $listOfTodos = $this->todos->withCriteria([new LatestFirst()])->all();
+      return TodoResource::collection($listOfTodos);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @param StoreTodoRequest $request
+     * @return JsonResponse
      */
-    public function create()
+    public function store(StoreTodoRequest $request): JsonResponse
     {
-      //
+      $this->todos->create($request->all());
+      return response()->json(['created' => true]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Todo $todo
+     * @return TodoResource
      */
-    public function store(StoreTodoRequest $request)
+    public function show(Todo $todo): TodoResource
     {
-      //
+      return new TodoResource($todo);
     }
 
     /**
-     * Display the specified resource.
+     * @param UpdateTodoRequest $request
+     * @param Todo $todo
+     * @return JsonResponse
      */
-    public function show(Todo $todo)
+    public function update(UpdateTodoRequest $request, Todo $todo): JsonResponse
     {
-      //
+      $todo->update([
+        'title' => $request->title,
+        'description' => $request->description,
+        'level' => $request->level,
+        'status' => $request->status,
+      ]);
+      return response()->json(['updated' => true]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * @param Todo $todo
+     * @return JsonResponse
      */
-    public function edit(Todo $todo)
+    public function destroy(Todo $todo): JsonResponse
     {
-      //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTodoRequest $request, Todo $todo)
-    {
-      //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Todo $todo)
-    {
-      //
+      $todo->update(['status' => 3]); // mark as complete/done but not erase in the table
+      return response()->json([], 204);
     }
   }
