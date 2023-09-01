@@ -58,13 +58,18 @@
       return response()->json(['updated' => true]);
     }
 
+    public function markAsRead(Todo $todo): JsonResponse
+    {
+      $todo->update(['status' => 3]); // mark as complete/done but not erase in the table
+      return response()->json([], 204);
+    }
     /**
      * @param Todo $todo
      * @return JsonResponse
      */
     public function destroy(Todo $todo): JsonResponse
     {
-      $todo->update(['status' => 3]); // mark as complete/done but not erase in the table
+      $todo->delete();
       return response()->json([], 204);
     }
   }

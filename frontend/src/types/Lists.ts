@@ -30,6 +30,7 @@ export interface ITableLists {
   setCurrentId: (todoId: string) => void,
   setEdit: (edit: boolean) => void,
   handleMarkAsDone: (id: number) => void
+  handleRemove: (id: number) => void
 }
 
 export interface IForm {

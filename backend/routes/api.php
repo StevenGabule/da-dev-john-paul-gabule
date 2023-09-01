@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('todos', TodoController::class);
+Route::put('/todos/{todo}/mark-as-done/', [TodoController::class, 'markAsRead']);

@@ -31,10 +31,10 @@ const App = () => {
       status: task.status
     }
 
-    if (!isEdit) {
-      // @ts-ignore
-      setTodoLists([newTask, ...todoLists]);
-    }
+    // if (!isEdit) {
+    //   // @ts-ignore
+    //   setTodoLists([newTask, ...todoLists]);
+    // }
 
     // @ts-ignore
     delete newTask.id;
@@ -79,8 +79,8 @@ const App = () => {
   const handleMarkAsDone = async (id: number) => {
     try {
       setIsLoading(true);
-      await fetch(`${baseUrl}/todos/${id}`, {
-        method: "DELETE",
+      await fetch(`${baseUrl}/todos/${id}/mark-as-done`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
@@ -95,7 +95,7 @@ const App = () => {
     }
   }
 
-  const filterStatus = async (statusCode: number) : Promise<void> => {
+  const filterStatus = async (statusCode: number): Promise<void> => {
     try {
       const {data} = await (await fetch(`${baseUrl}/todos`)).json();
       if (statusCode === 0) {
@@ -106,6 +106,15 @@ const App = () => {
       }
     } catch (e: any) {
       console.error(e.message())
+    }
+  }
+
+  const handleRemove = async (id: number): Promise<void> => {
+    try {
+      await fetch(`${baseUrl}/todos/${id}`, {method: "DELETE"});
+      window.location.reload();
+    } catch (e: any) {
+      console.error(e.message)
     }
   }
 
@@ -150,6 +159,7 @@ const App = () => {
                 <tbody>
                 {/* @ts-ignore*/}
                 <TableLists
+                  handleRemove={handleRemove}
                   handleMarkAsDone={handleMarkAsDone}
                   setEdit={setEdit}
                   setCurrentId={setCurrentId}

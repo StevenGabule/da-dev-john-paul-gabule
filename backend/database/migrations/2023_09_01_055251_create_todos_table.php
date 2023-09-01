@@ -16,6 +16,7 @@
         $table->text('description')->nullable();
         $table->unsignedTinyInteger('level')->default(1)->comment('1-low|2-medium|3-high');
         $table->unsignedTinyInteger('status')->default(1)->comment('1-pending|2-ongoing|3-complete');
+        $table->softDeletes();
         $table->timestamps();
       });
     }

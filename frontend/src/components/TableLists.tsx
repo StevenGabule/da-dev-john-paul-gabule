@@ -2,7 +2,7 @@ import {IList, ITableLists} from "../types/Lists";
 import {LEVEL, STATUS} from "../constant/todos";
 import TimeAgo from "timeago-react";
 
-const TableLists = ({todoLists, setTask, setCurrentId, setEdit, handleMarkAsDone}: ITableLists) => {
+const TableLists = ({todoLists, setTask, setCurrentId, setEdit, handleMarkAsDone, handleRemove}: ITableLists) => {
   return todoLists && todoLists.length !== 0 && todoLists.map((list: IList) => (
     <tr key={list.id || new Date().toString()}>
       <td><span className={'text-limit-display-title'}>{list.title}</span></td>
@@ -26,6 +26,9 @@ const TableLists = ({todoLists, setTask, setCurrentId, setEdit, handleMarkAsDone
           </button>
           <button title={'Mark as Done'} onClick={() => handleMarkAsDone(Number(list.id))} type={"button"}
                   className={'btn btn-success btn-sm'}>&#x2713;
+          </button>
+          <button title={'Mark as Done'} onClick={() => handleRemove(Number(list.id))} type={"button"}
+                  className={'btn btn-danger btn-sm'}>&#128465;
           </button>
         </div>
       </td>

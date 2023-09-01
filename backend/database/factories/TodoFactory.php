@@ -23,6 +23,7 @@
         'description' => $this->faker->text(100),
         'level' => rand(1, 3),
         'status' => rand(1, 3),
+        'deleted_at' => null,
         'created_at' => now(),
         'updated_at' => now(),
       ];
